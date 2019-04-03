@@ -23,9 +23,8 @@ expressing their trust of the forked code and it has the effect of
 triggering trusted builds on the CI provider which GitHub then associates
 with the forked PR.
 
-This workflow has been tested to work with both CircleCI and TravisCI.
-The code does not make any explicit reference to GitHub, but it has not
-been tested with any other Git hosting providers.
+This workflow has been tested to work with both CircleCI and TravisCI,
+but GitHub is the only supported Git host.
 
 ## Installation
 
@@ -46,6 +45,18 @@ GPF_URL=https://raw.githubusercontent.com/jklukas/git-push-fork-to-upstream-bran
 curl -sL $GPF_URL > $GPF_INSTALL_LOCATION
 chmod 755 $GPF_INSTALL_LOCATION
 ```
+
+## Configuration
+
+The tool respects a few configuration options set via environment variables.
+
+To push to an upstream branch other than `trigger-integration`, set:
+
+    export GPF_UPSTREAM_BRANCH=my-custom-branch-name
+
+To push code to the upstream branch via ssh rather than the default of https, set:
+
+    export GPF_USE_SSH=true
 
 ## Usage
 
@@ -70,10 +81,9 @@ git-push-fork-to-upstream-branch upstream jklukas:new-feature
 ```
 
 That invocation assumes that your remote is named `upstream` and it copies in
-the `username:branch` from the PR. Note that GitHub includes a handy button
+the `username:branch` from the PR; note that GitHub includes a handy button
 right next to that text for copying to the clipboard and pasting to this command.
-The code has now been pushed to the `trigger-integration` branch (set an
-environment variable `GPF_UPSTREAM_BRANCH` to change this). Because this is
+The code has now been pushed to the `trigger-integration`and because this is
 exactly the same commit (with the same hash) as on the forked repository, most
 CI systems will trigger a build that GitHub then associates with the forked PR.
 You should see status change in the PR to indicate that a new build is running.
