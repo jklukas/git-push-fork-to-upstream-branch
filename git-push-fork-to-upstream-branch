@@ -16,7 +16,7 @@ fi
 
 SOURCE_GH_USER=$(echo "$BRANCH_SPEC" | awk -F: '{print $1}')
 SOURCE_BRANCH=$(echo "$BRANCH_SPEC" | awk -F: '{print $2}')
-REPO_NAME=$(git remote get-url --push origin | awk -F/ '{print $NF}')
+REPO_NAME=$(git remote get-url --push origin | awk -F/ '{print $NF}' | sed 's/\.git$//')
 
 git remote remove fork-to-test || echo "Added new remote fork-to-test"
 if [ -n "$GPF_USE_SSH" ]; then
